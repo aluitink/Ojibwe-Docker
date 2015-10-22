@@ -1,6 +1,6 @@
 FROM microsoft/aspnet:1.0.0-beta8
 
-RUN apt-get -qqy install apt-utils && apt-get -qqy install git && apt-get -y clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -qqy install apt-utils && apt-get -qqy install git && apt-get -y clean && rm -rf /var/lib/apt/lists/*
 
 RUN rm -rf /opt/ojibwe
 RUN mkdir -p /opt/ojibwe
