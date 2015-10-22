@@ -1,0 +1,6 @@
+[submodule "deps/ojibwe"]
+	path = deps/ojibwe
+	url = https://github.com/aluitink/Ojibwe.git
+[submodule "deps/cassandra"]
+	path = deps/cassandra
+	url = https://github.com/docker-library/cassandra.git

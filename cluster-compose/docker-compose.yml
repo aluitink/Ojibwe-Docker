@@ -1,0 +1,59 @@
+cassandra1:
+  image: poklet/cassandra
+  hostname: cassandra1
+  volumes:
+   - /home/docker/cassandra/cassandra1:/var/lib/cassandra:rw
+  command: bash -c "chown cassandra:cassandra /var/lib/cassandra && start"
+cassandra2:
+  image: poklet/cassandra
+  links:
+   - cassandra1
+  hostname: cassandra2
+  volumes:
+   - /home/docker/cassandra/cassandra2:/var/lib/cassandra:rw
+  command: bash -c "chown cassandra:cassandra /var/lib/cassandra && start"
+cassandra3:
+  image: poklet/cassandra
+  links:
+   - cassandra1
+  hostname: cassandra3
+  volumes:
+   - /home/docker/cassandra/cassandra3:/var/lib/cassandra:rw
+  command: bash -c "chown cassandra:cassandra /var/lib/cassandra && start"
+nginx:
+  image: nginx
+  links:
+   - ojibwe1:ojibwe1
+   - ojibwe2:ojibwe2
+   - ojibwe3:ojibwe3
+  ports:
+   - "80:80"
+  volumes:
+   - ./etc/nginx:/etc/nginx
+ojibwe1:
+  build: ./deps/ojibwe
+  ports:
+   - "5004"
+  links:
+   - cassandra1
+   - cassandra2
+   - cassandra3
+  env_file: ojibwe.env
+ojibwe2:
+  build: ./deps/ojibwe
+  ports:
+   - "5004"
+  links:
+   - cassandra1
+   - cassandra2
+   - cassandra3
+  env_file: ojibwe.env
+ojibwe3:
+  build: ./deps/ojibwe
+  ports:
+   - "5004"
+  links:
+   - cassandra1
+   - cassandra2
+   - cassandra3
+  env_file: ojibwe.env
