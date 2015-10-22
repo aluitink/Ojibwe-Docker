@@ -1,4 +1,4 @@
-FROM microsoft/aspnet:1.0.0-beta6
+FROM microsoft/aspnet:1.0.0-beta8
 
 RUN apt-get -qqy install apt-utils && apt-get -qqy install git && apt-get -y clean && rm -rf /var/lib/apt/lists/*
 
