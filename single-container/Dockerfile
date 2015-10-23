@@ -21,25 +21,23 @@ RUN rm -rf /opt/ojibwe && \
 RUN cd /opt && git clone https://github.com/aluitink/Ojibwe.git /opt/ojibwe
 RUN cd /opt/ojibwe && git pull
 
-WORKDIR /opt/ojibwe/Ojibwe.Public.Api
-RUN dnu restore
+WORKDIR /opt/ojibwe/Common/Ojibwe.Common.Configuration
+RUN ["dnu", "restore"]
 
-RUN xbuild /p:Configuration=Release /opt/ojibwe/Ojibwe.Common.Configuration/Ojibwe.Common.Configuration.csproj 
+WORKDIR /opt/ojibwe/Common/Ojibwe.Common.RestClient
+RUN ["dnu", "restore"]
 
-RUN mono /opt/ojibwe/.nuget/NuGet.exe restore /opt/ojibwe/Ojibwe.Common.RestClient/packages.config -OutputDirectory /opt/ojibwe/packages 
-RUN xbuild /p:Configuration=Release /opt/ojibwe/Ojibwe.Common.RestClient/Ojibwe.Common.RestClient.csproj 
+WORKDIR /opt/ojibwe/Public/Ojibwe.Public.Sdk
+RUN ["dnu", "restore"]
 
-RUN mono /opt/ojibwe/.nuget/NuGet.exe restore /opt/ojibwe/Ojibwe.Public.Sdk/packages.config -OutputDirectory /opt/ojibwe/packages 
-RUN xbuild /p:Configuration=Release /opt/ojibwe/Ojibwe.Public.Sdk/Ojibwe.Public.Sdk.csproj 
+WORKDIR /opt/ojibwe/DataAccess/Ojibwe.DataAccess.Cassandra
+RUN ["dnu", "restore"]
 
-RUN mono /opt/ojibwe/.nuget/NuGet.exe restore /opt/ojibwe/Ojibwe.DataAccess.Cassandra/packages.config -OutputDirectory /opt/ojibwe/packages 
-RUN xbuild /p:Configuration=Release /opt/ojibwe/Ojibwe.DataAccess.Cassandra/Ojibwe.DataAccess.Cassandra.csproj 
+WORKDIR /opt/ojibwe/StorageAdapter/Ojibwe.StorageAdapter.FileSystem
+RUN ["dnu", "restore"]
 
-
-RUN mono /opt/ojibwe/.nuget/NuGet.exe restore /opt/ojibwe/Ojibwe.StorageAdapter.AmazonS3/packages.config -OutputDirectory /opt/ojibwe/packages 
-RUN xbuild /p:Configuration=Release /opt/ojibwe/Ojibwe.StorageAdapter.AmazonS3/Ojibwe.StorageAdapter.AmazonS3.csproj 
-RUN xbuild /p:Configuration=Release /opt/ojibwe/Ojibwe.StorageAdapter.NtfsFileSystem/Ojibwe.StorageAdapter.NtfsFileSystem.csproj 
-
+WORKDIR /opt/ojibwe/Public/Ojibwe.Public.Api
+RUN ["dnu", "restore"]
 
 RUN mkdir -p /var/lib/ojibwe/data
 RUN mkdir -p /var/log/ojibwe
