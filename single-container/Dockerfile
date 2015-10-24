@@ -1,4 +1,4 @@
-FROM microsoft/aspnet:1.0.0-beta6
+FROM microsoft/aspnet:1.0.0-beta8
 
 ADD src/cassandra.sources.list /etc/apt/sources.list.d/cassandra.sources.list
 
@@ -55,7 +55,8 @@ ENV StorageBlobChunkSize 1048576
 ENV SecureEncryptionPassword n-BpGknFDTn9Fehk9NCB+4e
 ENV SecureEncryptionSalt Jz6!P^6-*!2nV6M=L%Y_#Q!
 ENV LoggingDirectory /var/log/ojibwe
-
+
+
 EXPOSE 7199 7000 7001 9160 9042
 
 EXPOSE 5004
