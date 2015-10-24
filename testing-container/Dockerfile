@@ -65,4 +65,4 @@ EXPOSE 7199 7000 7001 9160 9042
 
 EXPOSE 5004
 
-CMD["/bin/bash"]
+CMD ["/bin/bash"]
