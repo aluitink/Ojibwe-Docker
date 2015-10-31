@@ -49,7 +49,7 @@ RUN chmod 755 /usr/local/bin/start
 
 ENV CassandraEndpoints 127.0.0.1
 ENV CassandraDatabase ojibwe
-ENV StorageAdapter Ojibwe.StorageAdapter.NtfsFileSystem
+ENV StorageAdapter Ojibwe.StorageAdapter.FileSystem
 ENV StorageAdapterConnectionString DATA=/var/lib/ojibwe/data
 ENV StorageBlobChunkSize 1048576
 ENV SecureEncryptionPassword n-BpGknFDTn9Fehk9NCB+4e

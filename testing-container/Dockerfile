@@ -9,7 +9,8 @@ RUN apt-get update && apt-get -y install \
 	supervisor \
 	openjdk-7-jre-headless \
 	dsc22=2.2.2-1 cassandra=2.2.2 \
-	git && \
+	git \
+	nano && \
 	apt-get -y clean all && \
 	rm -rf /var/lib/apt/lists/*
 
@@ -18,8 +19,10 @@ RUN rm -f /etc/security/limits.d/cassandra.conf
 RUN rm -rf /opt/ojibwe && \
 	mkdir -p /opt/ojibwe
 
-RUN cd /opt && git clone https://github.com/aluitink/Ojibwe.git /opt/ojibwe
-RUN cd /opt/ojibwe && git pull
+COPY ./Ojibwe /opt/ojibwe
+
+#RUN cd /opt && git clone https://github.com/aluitink/Ojibwe.git /opt/ojibwe
+#RUN cd /opt/ojibwe && git pull
 
 WORKDIR /opt/ojibwe/Common/Ojibwe.Common.Configuration
 RUN ["dnu", "restore"]
@@ -53,7 +56,7 @@ RUN chmod 755 /usr/local/bin/start
 
 ENV CassandraEndpoints 127.0.0.1
 ENV CassandraDatabase ojibwe
-ENV StorageAdapter Ojibwe.StorageAdapter.NtfsFileSystem
+ENV StorageAdapter Ojibwe.StorageAdapter.FileSystem
 ENV StorageAdapterConnectionString DATA=/var/lib/ojibwe/data
 ENV StorageBlobChunkSize 1048576
 ENV SecureEncryptionPassword n-BpGknFDTn9Fehk9NCB+4e
